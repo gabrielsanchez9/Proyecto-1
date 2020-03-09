@@ -9,7 +9,11 @@
 
 
  char word_collection[][23]= {
-                    "hola", "hola", "hola", "hola", "hola","hola","hola","hola","hola", "hola","hola","hola","hola","hola","hola","hola","hola","hola","hola","hola","hola","hola","hola"
+                   "hello","world","sun","sea","chair",
+                    "tree","kid","day","freedom",
+                    "fashion","woman","hola","amount","wheel",
+                    "night","shoe","weekend","beer","party",
+                    "beach","tabasco","happy","battery"
                     };
  
 
