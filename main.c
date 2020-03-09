@@ -7,12 +7,9 @@
 
 
 
+
  char word_collection[][23]= {
-                    "hello","world","sun","sea","chair",
-                    "tree","kid","day","freedom",
-                    "fashion","woman","hola","amount","wheel",
-                    "night","shoe","weekend","beer","party",
-                    "beach","tabasco","happy","battery"
+                    "hola", "hola", "hola", "hola", "hola","hola","hola","hola","hola", "hola","hola","hola","hola","hola","hola","hola","hola","hola","hola","hola","hola","hola","hola"
                     };
  
 
@@ -28,16 +25,19 @@ int main() {
   const char* palabra_elegida;
   char alias[50];
   const char* get_random_word(void);
+  char letra;
   int letra_adivinada[10] = {0,0,0,0,0,0,0,0,0,0};
   int numvidas=10;
   int vieja_buena = 0;
   int numbuenas = 0;
-  int reguessed = 0;
+  int letra_repetida = 0;
+  int vidas = 10;
   char guess[16];
   int loop = 0;
   int loopindx = 0;
   int random_word = rand() % 23;
 char vector[strlen(palabra_elegida)];
+
 
 
 
@@ -67,7 +67,11 @@ case 1 :
   
   juego:
   while (numbuenas < vector ){
-    
+
+    letra = letra_adivinada[0];
+		letra_repetida = 0; 
+    loop = 1;
+    vieja_buena = numbuenas;
   palabra_elegida = get_random_word();
   printf("\n Length of the word  = %ld \n\n",strlen(palabra_elegida));
 
@@ -96,21 +100,11 @@ int y = 0;
   }
   printf("\n");
 	
-	
-  letra = letra_adivinada[0];
-		reguessed = 0; 
-    loop = 1;
-
-		
-		printf("letra:%c\n",letra);
-		
-		vieja_buena = numbuenas;
-		
 		for( loopindx = 0; loopindx < vector; loopindx++) {
 		
 			if(letra_adivinada[loop] == 1) {
 				if(word_collection[random_word][loopindx] == letra) {
-					reguessed = 1; 
+					letra_repetida = 1; 
 					break;
 				} 
 				continue;
@@ -122,35 +116,39 @@ int y = 0;
 			}		
 		
 		}	
+		printf("letra:%c\n",letra);
 		
-		if( vieja_buena == numbuenas && reguessed == 0) {
+		if( vieja_buena == numbuenas && letra_repetida == 0) {
 			numvidas--;
 			printf("Try again\n");
 			if (numvidas == 0) {
 				break;
 			}
-		} else if( reguessed == 1) {
+		} else if( letra_repetida == 1) {
 			printf("Already Guessed!\n");
 		} else {
 			printf("Correct guess :)\n");
 		}
 	
-	
-
-  int nuevo;
-  printf("Press  to play again: ");
+	if (vidas == 0) {
+		printf("\nYou lost, your word was: %s\n",
+		word_collection[random_word]);	
+	} else  {	
+		printf("\nYou won!!! :)\n");
+	} 
+    } // juego
+  
+int nuevo;
+printf("Press 1 to play again: ");
   scanf("%d", &nuevo);
 
-    if(nuevo == 1){
+if(nuevo == 1){
       goto juego;
     }
-  }
-
-
 
 
 break;
-  } 
+}
 
 case 2 : 
 {
