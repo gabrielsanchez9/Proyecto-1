@@ -6,26 +6,42 @@
 
 
 
-const char *word_collection[23]= {
+
+ char word_collection[][23]= {
                     "hello","world","sun","sea","chair",
                     "tree","kid","day","freedom",
-                    "fashion","woman","Hungary","amount","wheel",
+                    "fashion","woman","hola","amount","wheel",
                     "night","shoe","weekend","beer","party",
-                    "beach","tabasco","cigarr","battery"
+                    "beach","tabasco","happy","battery"
                     };
  
 
 const char* get_random_word(void); 
 void imprimir_vector(char* arr);
 void igualar_letras(char* palabra, char letra2);
+void sustituir_letra(char* guion, char letrasus);
 
 int main() {
   //menu
 
   int menu;
+  const char* palabra_elegida;
   char alias[50];
   const char* get_random_word(void);
-  
+  int letra_adivinada[10] = {0,0,0,0,0,0,0,0,0,0};
+  int numvidas=10;
+  int vieja_buena = 0;
+  int numbuenas = 0;
+  int reguessed = 0;
+  char guess[16];
+  int loop = 0;
+  int loopindx = 0;
+  int random_word = rand() % 23;
+char vector[strlen(palabra_elegida)];
+
+
+
+
 puts("-------HANGMAN------");
  puts("********************");
  puts("*        MENU      *");
@@ -39,6 +55,7 @@ switch(menu){
 ;
 case 1 :
 {
+  
   puts("You chose to start!");
   //nombre jugador
   printf("Enter your nickname: ");
@@ -47,37 +64,94 @@ case 1 :
   printf("You are now: %s", alias);
   
   //tabla de nombre etc
-  const char* palabra_elegida;
+  
   juego:
+  while (numbuenas < vector ){
+    
   palabra_elegida = get_random_word();
   printf("\n Length of the word  = %ld \n\n",strlen(palabra_elegida));
-  char vector[strlen(palabra_elegida)];
+
+  
    for (int x=0 ; x<strlen(palabra_elegida); x++){
-     vector[x] = '_';
+
+     if (letra_adivinada[random_word]==1){
+       printf("%c", word_collection[random_word][loopindx]);
+     }
+       else
+       {
+         printf(" _ ");
+
+       }
    }
 
-   imprimir_vector(vector);
+   
 char letra;
 int y = 0;
   while(y<10){
-    printf("Type a letter: ");
+    printf("\nType a letter: ");
+    printf("\nCorrect So Far:%d\n",numbuenas);
     scanf(" %c", &letra);
-   igualar_letras(palabra_elegida,letra);
-   igualar_letras(vector,letra);
-  
+
     y++;
   }
+  printf("\n");
+	
+	
+  letra = letra_adivinada[0];
+		reguessed = 0; 
+    loop = 1;
+
+		
+		printf("letra:%c\n",letra);
+		
+		vieja_buena = numbuenas;
+		
+		for( loopindx = 0; loopindx < vector; loopindx++) {
+		
+			if(letra_adivinada[loop] == 1) {
+				if(word_collection[random_word][loopindx] == letra) {
+					reguessed = 1; 
+					break;
+				} 
+				continue;
+			}
+		
+			if( letra == word_collection[random_word][loopindx] ) {
+				vector[loopindx] = 1;
+				numbuenas++;				
+			}		
+		
+		}	
+		
+		if( vieja_buena == numbuenas && reguessed == 0) {
+			numvidas--;
+			printf("Try again\n");
+			if (numvidas == 0) {
+				break;
+			}
+		} else if( reguessed == 1) {
+			printf("Already Guessed!\n");
+		} else {
+			printf("Correct guess :)\n");
+		}
+	
+	
 
   int nuevo;
-  printf("Presione 1 para jugar otra vez: ");
+  printf("Press  to play again: ");
   scanf("%d", &nuevo);
 
     if(nuevo == 1){
       goto juego;
     }
+  }
+
+
+
 
 break;
-}
+  } 
+
 case 2 : 
 {
 puts("You chose Instructions!");
@@ -87,7 +161,7 @@ break;
 case 3 :
 {
 puts("You chose to About");
-printf("This is an interactive game in which you have to try and guess some words. The point of the game is to guess the word before you run out of chances. This game was made by Gabriel Sanchez :)");
+printf("This is an interactive game in which you have to try and guess some words. The point of the game is to guess the word before you run out of chances. This game was made by gabrielsanchez@ufm.edu :)");
 break;
 }
 case 4:
@@ -98,6 +172,7 @@ break;
 default:
 {
 puts("Invalid input, please select one of the options listed above!");
+
 break;
 }
 return 0;
@@ -111,22 +186,6 @@ const char* get_random_word(void){
     return word_collection[random_position];
  }
 
- void imprimir_vector(char* arr){
 
-for (int x=0 ; x<strlen(arr); x++){
-     printf("%c  ", arr[x]);
-   }
 
-   printf("\n");
-   
 
-}
-
-void igualar_letras(char* palabra, char letra2){
-  for (int x=0 ; x<strlen(palabra); x++){
-      printf("%c  ", palabra[x]);
-    }
-    printf("\n");
-    printf("%c",letra2);
-    printf("\n");
-}
